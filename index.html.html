@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Minimola Cafe & Play</title>
+  <meta name="description" content="Minimola Cafe & Play - Çocuk oyun alanı, aile dostu kafe ve doğum günü organizasyonu." />
+
+  <!-- Dosyasız favicon (SVG) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' rx='16' fill='%23a8b5a3'/%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' font-size='36' font-family='Arial' fill='white'%3EM%3C/text%3E%3C/svg%3E">
+
+  <style>
+    :root{
+      --sage:#a8b5a3;
+      --sage-dark:#808d7b;
+      --sage-soft:#c7d1c1;
+      --bg:#f6f7f3;
+      --card:#ffffff;
+      --text:#2f2f2f;
+      --muted:#6b6b6b;
+      --shadow:0 18px 45px rgba(0,0,0,.10);
+      --radius:18px;
+      --radius2:26px;
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 900px at 10% -10%, rgba(168,181,163,.35), transparent 55%),
+        radial-gradient(1100px 800px at 110% 10%, rgba(199,209,193,.45), transparent 55%),
+        var(--bg);
+    }
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 16px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.08);
+      background:linear-gradient(180deg, #fff, #f4f6f2);
+      box-shadow:0 10px 20px rgba(0,0,0,.06);
+      text-decoration:none;
+      font-weight:650;
+      transition:.2s transform, .2s box-shadow, .2s background;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 14px 28px rgba(0,0,0,.10)}
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(168,181,163,.95), rgba(128,141,123,.95));
+      color:#fff;
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .btn.ghost{
+      background:transparent;
+      box-shadow:none;
+      border:1px solid rgba(0,0,0,.12);
+    }
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(168,181,163,.16);
+      border:1px solid rgba(168,181,163,.30);
+      color:var(--sage-dark);
+      font-weight:650;
+      font-size:13px;
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(10px);
+      background: rgba(246,247,243,.72);
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none;
+      min-width: 220px;
+    }
+    .logoMark{
+      width:44px; height:44px; border-radius:14px;
+      box-shadow:0 12px 26px rgba(0,0,0,.12);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .brandText{display:flex; flex-direction:column; line-height:1.05}
+    .brandText strong{font-size:16px; letter-spacing:.2px}
+    .brandText span{font-size:12px; color:var(--muted); font-weight:600}
+
+    nav ul{
+      display:flex; gap:10px; list-style:none; margin:0; padding:0;
+      align-items:center;
+    }
+    nav a{
+      text-decoration:none;
+      font-weight:650;
+      font-size:14px;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      transition:.2s background;
+    }
+    nav a:hover{background:rgba(168,181,163,.18)}
+    .navActions{display:flex; gap:10px; align-items:center}
+    .hamb{
+      display:none;
+      width:44px; height:44px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.12);
+      background:#fff;
+      box-shadow:0 10px 22px rgba(0,0,0,.06);
+      cursor:pointer;
+    }
+
+    /* Hero */
+    .hero{ padding:26px 0 8px; }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .heroCard{
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .heroCard:before{
+      content:"";
+      position:absolute; inset:-2px -2px auto auto;
+      width:260px; height:260px;
+      background: radial-gradient(circle at 30% 30%, rgba(168,181,163,.55), transparent 55%);
+      filter: blur(2px);
+      border-radius: 999px;
+      opacity:.9;
+      pointer-events:none;
+    }
+    .heroH{
+      font-size:36px;
+      line-height:1.05;
+      margin:10px 0 10px;
+      letter-spacing:-.4px;
+    }
+    .heroP{
+      margin:0 0 16px;
+      color:var(--muted);
+      font-weight:600;
+      max-width: 52ch;
+    }
+    .heroBtns{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
+    .heroMini{
+      display:grid; gap:12px;
+      grid-template-rows: 1fr 1fr;
+    }
+    .miniCard{
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+      display:flex; flex-direction:column; justify-content:center;
+      position:relative;
+      overflow:hidden;
+    }
+    .miniCard .title{font-weight:800; margin:0 0 6px}
+    .miniCard .desc{margin:0; color:var(--muted); font-weight:600}
+    .miniCard:after{
+      content:"";
+      position:absolute; right:-60px; top:-60px;
+      width:180px; height:180px;
+      background: radial-gradient(circle at 30% 30%, rgba(199,209,193,.70), transparent 60%);
+      border-radius:999px;
+      pointer-events:none;
+    }
+
+    /* Sections */
+    section{padding:26px 0}
+    .sectionTop{display:flex; justify-content:space-between; align-items:flex-end; gap:12px; margin-bottom:14px}
+    .sectionTop h2{margin:0; font-size:22px; letter-spacing:-.2px}
+    .sectionTop p{margin:0; color:var(--muted); font-weight:600}
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      padding:18px;
+      overflow:hidden;
+      position:relative;
+    }
+    .card h3{margin:0 0 8px; font-size:17px}
+    .card p{margin:0; color:var(--muted); font-weight:600}
+    .icon{
+      width:44px; height:44px; border-radius:14px;
+      display:grid; place-items:center;
+      background:rgba(168,181,163,.16);
+      border:1px solid rgba(168,181,163,.26);
+      margin-bottom:12px;
+      font-size:20px;
+    }
+
+    /* Instagram Gallery */
+    .igGrid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:12px;
+    }
+    .igItem{
+      grid-column: span 4;
+      background: rgba(255,255,255,.78);
+      border:1px solid rgba(0,0,0,.06);
+      border-radius: 22px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      overflow:hidden;
+      min-height: 520px;
+    }
+    .igItem iframe{
+      width:100%;
+      height:520px;
+      border:0;
+      display:block;
+    }
+
+    /* Reservation */
+    .formGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    label{
+      display:block;
+      font-weight:750;
+      font-size:13px;
+      color:rgba(47,47,47,.88);
+      margin:0 0 6px;
+    }
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.12);
+      background:#fff;
+      font: inherit;
+      outline:none;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(128,141,123,.55);
+      box-shadow: 0 0 0 4px rgba(168,181,163,.18);
+    }
+    textarea{min-height:110px; resize:vertical}
+    .full{grid-column:1 / -1}
+    .formActions{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+
+    /* Contact */
+    .contactGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    .contactList{ display:grid; gap:10px; margin-top:10px; }
+    .contactItem{
+      display:flex; gap:10px; align-items:flex-start;
+      padding:12px;
+      border-radius:18px;
+      background: rgba(168,181,163,.10);
+      border:1px solid rgba(168,181,163,.25);
+    }
+    .contactItem b{display:block}
+    .contactItem small{display:block; color:var(--muted); font-weight:650}
+    .map{
+      width:100%; height:100%;
+      min-height: 320px;
+      border:0;
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    /* Footer */
+    footer{ padding:22px 0 30px; color:rgba(47,47,47,.74); }
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      align-items:center;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0,0,0,.08);
+      flex-wrap:wrap;
+    }
+    .chips{display:flex; gap:10px; flex-wrap:wrap}
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.08);
+      background: rgba(255,255,255,.55);
+      font-weight:650;
+      font-size:13px;
+      text-decoration:none;
+    }
+
+    /* Floating WhatsApp */
+    .floatWA{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:50;
+      border-radius:999px;
+      padding:12px 14px;
+      background: linear-gradient(180deg, rgba(168,181,163,.95), rgba(128,141,123,.95));
+      color:#fff;
+      text-decoration:none;
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.18);
+      display:flex;
+      gap:10px;
+      align-items:center;
+      font-weight:800;
+    }
+
+    /* Mobile */
+    @media (max-width: 920px){
+      .heroGrid{grid-template-columns:1fr}
+      .heroMini{grid-template-rows:auto; grid-template-columns:1fr 1fr}
+      .grid3{grid-template-columns:1fr}
+      .formGrid{grid-template-columns:1fr}
+      .contactGrid{grid-template-columns:1fr}
+      nav ul{display:none}
+      .hamb{display:inline-grid; place-items:center}
+      .navActions .btn{display:none}
+      .igItem{grid-column: span 12; min-height: 520px;}
+    }
+    /* Mobile menu */
+    .mobileMenu{ display:none; padding: 8px 0 14px; }
+    .mobileMenu a{
+      display:block;
+      padding:12px 12px;
+      border-radius:14px;
+      text-decoration:none;
+      font-weight:750;
+      background:rgba(168,181,163,.14);
+      border:1px solid rgba(168,181,163,.26);
+      margin-top:10px;
+    }
+    .showMenu{display:block}
+  </style>
+</head>
+
+<body>
+  <!-- Floating WhatsApp -->
+  <a class="floatWA" href="https://wa.me/905538141957?text=Merhaba%20Minimola%20Cafe%20%26%20Play%20i%C3%A7in%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">
+    💬 WhatsApp
+  </a>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Minimola Cafe & Play">
+          <!-- LOGO (SVG) - ID çakışmasın diye benzersiz -->
+          <div class="logoMark" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="44" height="44" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="mmg" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#a8b5a3"/>
+                  <stop offset="1" stop-color="#808d7b"/>
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="64" height="64" rx="18" fill="url(#mmg)"/>
+              <path d="M16 44V20h6l10 14 10-14h6v24h-6V30l-10 14-10-14v14h-6z" fill="white" opacity=".95"/>
+              <circle cx="52" cy="16" r="4" fill="white" opacity=".35"/>
+            </svg>
+          </div>
+          <div class="brandText">
+            <strong>Minimola Cafe & Play</strong>
+            <span>Çocuk Oyun Alanı • Kafe • Doğum Günü</span>
+          </div>
+        </a>
+
+        <nav aria-label="Ana menü">
+          <ul>
+            <li><a href="#hizmetler">Hizmetler</a></li>
+            <li><a href="#galeri">Galeri</a></li>
+            <li><a href="#rezervasyon">Rezervasyon</a></li>
+            <li><a href="#iletisim">İletişim</a></li>
+          </ul>
+        </nav>
+
+        <div class="navActions">
+          <a class="btn ghost" href="tel:+905538141957">📞 Ara</a>
+          <a class="btn primary" href="#rezervasyon">📅 Rezervasyon</a>
+          <button class="hamb" id="hamb" aria-label="Menüyü aç/kapat">☰</button>
+        </div>
+      </div>
+
+      <div class="mobileMenu" id="mobileMenu">
+        <a href="#hizmetler">Hizmetler</a>
+        <a href="#galeri">Galeri</a>
+        <a href="#rezervasyon">Rezervasyon</a>
+        <a href="#iletisim">İletişim</a>
+        <a href="tel:+905538141957">📞 0553 814 19 57</a>
+        <a href="https://www.instagram.com/minimolaplay/" target="_blank" rel="noopener">📷 Instagram: @minimolaplay</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <div class="wrap hero">
+      <div class="heroGrid">
+        <div class="heroCard">
+          <span class="pill">🌿 Modern pastel • Aile dostu</span>
+          <h1 class="heroH">Çocuklar eğlensin,<br/>sen keyfini çıkar.</h1>
+          <p class="heroP">
+            Minimola Cafe & Play; güvenli oyun alanı, lezzetli kafe menüsü ve
+            unutulmaz doğum günü organizasyonlarıyla yanınızda.
+          </p>
+          <div class="heroBtns">
+            <a class="btn primary" href="#rezervasyon">📅 Hemen Rezervasyon</a>
+            <a class="btn" href="https://www.instagram.com/minimolaplay/" target="_blank" rel="noopener">📷 Instagram</a>
+            <a class="btn ghost" href="tel:+905538141957">📞 0553 814 19 57</a>
+          </div>
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <span class="pill">🧸 Oyun Alanı</span>
+            <span class="pill">🎂 Doğum Günü</span>
+            <span class="pill">☕ Kafe</span>
+            <span class="pill">🎨 Atölye</span>
+          </div>
+        </div>
+
+        <div class="heroMini">
+          <div class="miniCard">
+            <p class="title">🎉 Doğum günü paketleri</p>
+            <p class="desc">Süsleme, ikram ve eğlenceyi birlikte planlayalım.</p>
+            <div style="margin-top:12px">
+              <a class="btn" href="#rezervasyon">Paket Sor</a>
+            </div>
+          </div>
+          <div class="miniCard">
+            <p class="title">🕒 Hızlı iletişim</p>
+            <p class="desc">Tek tıkla ara, WhatsApp’tan yaz veya mail at.</p>
+            <div class="heroBtns" style="margin-top:12px">
+              <a class="btn ghost" href="mailto:elifsenayminimo777@gmail.com">📧 Mail</a>
+              <a class="btn" href="https://wa.me/905538141957?text=Merhaba%20Minimola%20Cafe%20%26%20Play%20i%C3%A7in%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 WhatsApp</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section id="hizmetler">
+      <div class="wrap">
+        <div class="sectionTop">
+          <div>
+            <h2>Hizmetler</h2>
+            <p>Miniklere güvenli alan, ailelere konfor.</p>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="card">
+            <div class="icon">🧸</div>
+            <h3>Çocuk Oyun Alanı</h3>
+            <p>Güvenli ve keyifli oyun alanı. Aileler rahatça oturup kahvelerini içebilir.</p>
+          </div>
+          <div class="card">
+            <div class="icon">☕</div>
+            <h3>Kafe</h3>
+            <p>Sıcacık içecekler ve lezzetli atıştırmalıklarla huzurlu bir mola.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🎂</div>
+            <h3>Doğum Günü Organizasyonu</h3>
+            <p>Paket seçenekleri, süsleme ve planlama desteği ile unutulmaz kutlamalar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="galeri">
+      <div class="wrap">
+        <div class="sectionTop">
+          <div>
+            <h2>Galeri</h2>
+            <p>Instagram paylaşımlarınızdan otomatik gösterilir.</p>
+          </div>
+          <a class="btn" href="https://www.instagram.com/minimolaplay/" target="_blank" rel="noopener">📷 Instagram’da Gör</a>
+        </div>
+
+        <!-- Instagram Embed Galeri -->
+        <div class="igGrid" id="igGallery"></div>
+
+        <p style="margin:12px 0 0; color:var(--muted); font-weight:600; font-size:13px;">
+          Not: Paylaşımlar görünmüyorsa hesap/postlar herkese açık (public) olmalı.
+        </p>
+      </div>
+    </section>
+
+    <!-- RESERVATION -->
+    <section id="rezervasyon">
+      <div class="wrap">
+        <div class="sectionTop">
+          <div>
+            <h2>Rezervasyon / Teklif Formu</h2>
+            <p>Formu doldur → WhatsApp’a hazır mesaj olarak gitsin.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <form id="resForm">
+            <div class="formGrid">
+              <div>
+                <label>Ad Soyad</label>
+                <input name="name" placeholder="Örn: Elif Şenay" required />
+              </div>
+              <div>
+                <label>Telefon</label>
+                <input name="phone" placeholder="Örn: 05xx xxx xx xx" />
+              </div>
+
+              <div>
+                <label>Hizmet</label>
+                <select name="service">
+                  <option>Oyun Alanı</option>
+                  <option>Kafe</option>
+                  <option>Doğum Günü Organizasyonu</option>
+                  <option>Atölye / Etkinlik</option>
+                </select>
+              </div>
+              <div>
+                <label>Kişi Sayısı</label>
+                <select name="count">
+                  <option>1-5</option>
+                  <option>6-10</option>
+                  <option>11-20</option>
+                  <option>20+</option>
+                </select>
+              </div>
+
+              <div>
+                <label>Tarih</label>
+                <input type="date" name="date" required />
+              </div>
+              <div>
+                <label>Saat</label>
+                <input type="time" name="time" required />
+              </div>
+
+              <div class="full">
+                <label>Notunuz</label>
+                <textarea name="note" placeholder="Örn: Doğum günü paketi, süsleme rengi, ek istekler..."></textarea>
+              </div>
+            </div>
+
+            <div class="formActions">
+              <button class="btn primary" type="submit">💬 WhatsApp’tan Gönder</button>
+              <a class="btn" id="mailBtn" href="#">📧 Mail ile Gönder</a>
+              <a class="btn ghost" href="tel:+905538141957">📞 Ara</a>
+            </div>
+
+            <p style="margin:12px 0 0; color:var(--muted); font-weight:600; font-size:13px;">
+              Form gönderimi “WhatsApp / Mail” olarak çalışır. (Sunucu yoksa en pratik yöntem.)
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="iletisim">
+      <div class="wrap">
+        <div class="sectionTop">
+          <div>
+            <h2>İletişim</h2>
+            <p>Bize hızlıca ulaşın ve konumdan yol tarifi alın.</p>
+          </div>
+        </div>
+
+        <div class="contactGrid">
+          <div class="card">
+            <h3 style="margin:0 0 6px;">Minimola Cafe & Play</h3>
+            <p style="margin:0; color:var(--muted); font-weight:650;">
+              Çocuk oyun alanı • Aile dostu kafe • Doğum günü organizasyonu
+            </p>
+
+            <div class="contactList">
+              <div class="contactItem">
+                <div class="icon" style="margin:0">📞</div>
+                <div>
+                  <b>Telefon</b>
+                  <small><a href="tel:+905538141957" style="text-decoration:none; font-weight:800;">0553 814 19 57</a></small>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <div class="icon" style="margin:0">📧</div>
+                <div>
+                  <b>E-posta</b>
+                  <small><a href="mailto:elifsenayminimo777@gmail.com" style="text-decoration:none; font-weight:800;">elifsenayminimo777@gmail.com</a></small>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <div class="icon" style="margin:0">📷</div>
+                <div>
+                  <b>Instagram</b>
+                  <small><a href="https://www.instagram.com/minimolaplay/" target="_blank" rel="noopener" style="text-decoration:none; font-weight:800;">@minimolaplay</a></small>
+                </div>
+              </div>
+
+              <div class="contactItem">
+                <div class="icon" style="margin:0">📍</div>
+                <div>
+                  <b>Konum</b>
+                  <small>
+                    <a href="https://www.google.com/maps?q=41.083106994628906,28.92929458618164&z=17&hl=tr" target="_blank" rel="noopener"
+                       style="text-decoration:none; font-weight:800;">
+                      Haritada Aç / Yol Tarifi
+                    </a>
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="chip" href="https://wa.me/905538141957?text=Merhaba%20Minimola%20Cafe%20%26%20Play%20i%C3%A7in%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener">💬 WhatsApp</a>
+              <a class="chip" href="#rezervasyon">📅 Rezervasyon</a>
+              <a class="chip" href="tel:+905538141957">📞 Ara</a>
+            </div>
+          </div>
+
+          <!-- Google Maps Embed -->
+          <iframe class="map"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=41.083106994628906,28.92929458618164&z=17&hl=tr&output=embed">
+          </iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <span class="pill">🌿 Minimola Cafe & Play</span>
+          <span style="font-weight:650;">© <span id="year"></span> Tüm hakları saklıdır.</span>
+        </div>
+        <div class="chips">
+          <a class="chip" href="https://www.instagram.com/minimolaplay/" target="_blank" rel="noopener">Instagram</a>
+          <a class="chip" href="mailto:elifsenayminimo777@gmail.com">E-posta</a>
+          <a class="chip" href="tel:+905538141957">Telefon</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Yıl
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobil menü
+    const hamb = document.getElementById("hamb");
+    const mobileMenu = document.getElementById("mobileMenu");
+    hamb?.addEventListener("click", () => mobileMenu.classList.toggle("showMenu"));
+
+    // Form -> WhatsApp + Mail
+    const WA_NUMBER = "905538141957";
+    const MAIL_TO = "elifsenayminimo777@gmail.com";
+    const IG = "https://www.instagram.com/minimolaplay/";
+
+    function buildMessage(data){
+      const lines = [
+        "Merhaba Minimola Cafe & Play 👋",
+        "",
+        `Ad Soyad: ${data.name || "-"}`,
+        `Telefon: ${data.phone || "-"}`,
+        `Hizmet: ${data.service || "-"}`,
+        `Kişi Sayısı: ${data.count || "-"}`,
+        `Tarih: ${data.date || "-"}`,
+        `Saat: ${data.time || "-"}`,
+        `Not: ${data.note || "-"}`,
+        "",
+        `Instagram: ${IG}`
+      ];
+      return lines.join("\n");
+    }
+
+    const form = document.getElementById("resForm");
+    const mailBtn = document.getElementById("mailBtn");
+
+    function getFormData(){
+      const fd = new FormData(form);
+      return Object.fromEntries(fd.entries());
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = getFormData();
+      if(!data.name || !data.date || !data.time){
+        alert("Lütfen Ad Soyad, Tarih ve Saat alanlarını doldurun.");
+        return;
+      }
+      const msg = encodeURIComponent(buildMessage(data));
+      const url = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+      window.open(url, "_blank", "noopener");
+    });
+
+    mailBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const data = getFormData();
+      const subject = encodeURIComponent("Minimola Rezervasyon / Teklif");
+      const body = encodeURIComponent(buildMessage(data));
+      window.location.href = `mailto:${MAIL_TO}?subject=${subject}&body=${body}`;
+    });
+
+    // Tarih inputuna min=bugün
+    const dateEl = document.querySelector('input[type="date"][name="date"]');
+    if(dateEl){
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth()+1).padStart(2,'0');
+      const dd = String(today.getDate()).padStart(2,'0');
+      dateEl.min = `${yyyy}-${mm}-${dd}`;
+    }
+
+    // ========= Instagram Galeri (API'siz embed) =========
+    const IG_POSTS = [
+      "https://www.instagram.com/p/DSKBVasjf8i/",
+      "https://www.instagram.com/p/DRqHUgKgszf/",
+      "https://www.instagram.com/p/DSDET92Aiow/"
+    ];
+
+    function toEmbedUrl(url){
+      try{
+        const u = new URL(url);
+        const parts = u.pathname.split("/").filter(Boolean); // ["p","CODE"]
+        if(parts.length >= 2){
+          const type = parts[0]; // p | reel | tv
+          const code = parts[1];
+          return `https://www.instagram.com/${type}/${code}/embed`;
+        }
+      }catch(e){}
+      return null;
+    }
+
+    (function renderIG(){
+      const root = document.getElementById("igGallery");
+      if(!root) return;
+
+      const items = IG_POSTS.map((link) => {
+        const embed = toEmbedUrl(link);
+        if(!embed) return "";
+        return `
+          <div class="igItem">
+            <iframe
+              src="${embed}"
+              loading="lazy"
+              allowtransparency="true"
+              scrolling="no"
+              referrerpolicy="strict-origin-when-cross-origin">
+            </iframe>
+          </div>
+        `;
+      }).join("");
+
+      root.innerHTML = items || `
+        <div class="card" style="grid-column: span 12;">
+          <h3 style="margin:0 0 8px;">Galeri hazır ✅</h3>
+          <p style="margin:0; color:var(--muted); font-weight:650;">
+            Instagram post linkleri eklenince burada otomatik görünecek.
+          </p>
+        </div>
+      `;
+    })();
+  </script>
+</body>
+</html>
